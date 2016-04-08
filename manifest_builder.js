@@ -5,7 +5,8 @@ function ManifestBuilder(config){
   var fullBase = config.fullBase;
 
   return through.obj(function(data, encoding, done){
-    console.log(data.contents.toString());
+    var manifest = JSON.parse(data.contents.toString()).manifest;
+    console.log(manifest);
     done();
   });
 }
