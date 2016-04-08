@@ -2,16 +2,12 @@ var gulp = require('gulp');
 var fs = require('fs');
 var path = require('path');
 var clean = require('gulp-clean');
-var tap = require('gulp-tap');
+var ManifestBuilder = require('./manifest_builder.js');
 
 var env, gallery;
 
 gulp.task('build', ['config', 'clean'], function(){
-  gulp.src('wedding/manifest.json')
-    .pipe(tap(function(file){
-      buildFrom(file.contents.toString());
-    }))
-    .pipe(gulp.dest('build'))
+  gulp.src('wedding/manifest.json').pipe(ManifestBuilder(config));
 });
 
 gulp.task('clean', function(){
@@ -19,11 +15,13 @@ gulp.task('clean', function(){
     .pipe(clean());
 });
 
-var buildFrom = function(manifest){
+var manifestFromStream = function(stream){
+  return JSON.parse(stream.contents.toString()).manifest;
+}
+
+var buildFrom = function(stream){
   var build = [];
-  
-  console.log(manifest);
-  manifest.forEach(function(picture){
+  manifestFromStream(stream).forEach(function(picture){
     build.push(buildPicture(picture));
   });
 
