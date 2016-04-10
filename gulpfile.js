@@ -3,15 +3,22 @@ var fs = require('fs');
 var path = require('path');
 var clean = require('gulp-clean');
 var ManifestBuilder = require('./manifest_builder.js');
+var gutil = require('gulp-util');
+var debug = require('gulp-debug');
 
-var env, gallery;
+var env,
+  gallery;
 
 gulp.task('build', ['config', 'clean'], function(){
-  gulp.src('wedding/manifest.json').pipe(ManifestBuilder(config));
+  builder = new ManifestBuilder(config());
+  gulp.src(path.join(__dirname, 'wedding', 'manifest.json'))
+   .pipe(debug({minimal: false}))
+   .pipe(builder.stream)
+   .pipe(gulp.dest('config/'))
 });
 
 gulp.task('clean', function(){
-  gulp.src('build', { read: false })
+  gulp.src('config/*', { read: false })
     .pipe(clean());
 });
 
@@ -48,13 +55,24 @@ gulp.task('environment', function(){
   }
 });
 
-var config = {};
+var config = function(){
+  console.log('Using config from ' + config_path);
+  config_path = path.join(__dirname, gallery, 'config', env + '.json');
+  try {
+    data = fs.readFileSync(config_path);
+    return JSON.parse(data);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
 gulp.task('config', ['environment'], function(){
   config_path = path.join(__dirname, gallery, 'config', env + '.json');
-  fs.readFile(config_path, function(err, data){
+  return fs.readFile(config_path, function(err, data){
     if (!err) {
       console.log('Using config from ' + config_path);
       config = JSON.parse(data);
+      console.log(config);
     } else {
       console.log(err.message);
     }
