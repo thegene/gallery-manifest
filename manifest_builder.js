@@ -1,40 +1,27 @@
-var through = require('through2');
-
 function ManifestBuilder(config){
-  var thumbBase = config.thumbBase;
-  var fullBase = config.fullBase;
+  this.thumbBase = config.thumbBase;
+  this.fullBase = config.fullBase;
 
-  var prependBase = function(base, file){
-    return base + '/' + file;
+  this.thumb = function(thumb){
+    return this.thumbBase + '/' + thumb;
   }
 
-  var thumb = function(thumb){
-    return prependBase(thumbBase, thumb);
+  this.full = function(full){
+    return this.fullBase + '/' + full;
   }
 
-  var full = function(full){
-    return prependBase(fullBase, full);
-  }
-
-  var buildFile = function(file, manifest){
-    file.contents = new Buffer(JSON.stringify({ manifest: manifest }));
-    return file;
-  }
-
-  this.stream = through.obj(function(data, encoding, done){
+  this.transform = function(data){
+    manifest = data.manifest;
     build = [];
-    console.log(thumbBase);
-    manifest = JSON.parse(data.contents.toString()).manifest;
     for (var i in manifest) {
       var entry = manifest[i];
       build.push({
-        thumb: thumb(entry.thumb),
-        full: full(entry.full)
+        thumb: this.thumb(entry.thumb),
+        full: this.full(entry.full)
       })
     };
-    this.push(buildFile(data, build));
-    done();
-  });
+    return { manifest: build };
+  }
 }
 
 module.exports = ManifestBuilder;

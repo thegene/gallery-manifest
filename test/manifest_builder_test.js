@@ -1,7 +1,4 @@
 var ManifestBuilder = require('../manifest_builder.js');
-var gulp = require('gulp');
-var fs = require('fs');
-var path = require('path');
 var expect = require('expect');
 
 context('Given a ManifestBuilder with config', function(){
@@ -10,7 +7,7 @@ context('Given a ManifestBuilder with config', function(){
 
   before(function(){
     config = { thumbBase: 'localhost:3000/data/small', fullBase: 'localhost:3000/data' };
-    subject = ManifestBuilder(config);
+    subject =  new ManifestBuilder(config);
   });
 
   context('when piped a manifest JSON stream', function(){
@@ -24,22 +21,22 @@ context('Given a ManifestBuilder with config', function(){
         thumb: 'thumbs/apple.thumb.jpg'
       }
     ]};
+    
+    context('the transformed manifest', function(){
+      var new_manifest;
+      before(function(){
+        new_manifest = subject.transform(manifest).manifest;
+      });
 
-    var manifest_src = path.join(__dirname, 'test_manifest.json');
-    var new_manifest;
+      it('alters the full image', function(){
+        expect(new_manifest[0].full).toBe('localhost:3000/data/foo.jpg');
+        expect(new_manifest[1].full).toBe('localhost:3000/data/apple.jpg');
+      });
 
-    before(function(){
-      fs.writeFileSync(manifest_src, JSON.stringify(manifest));
-      gulp.src(manifest_src).pipe(subject).pipe(gulp.dest(__dirname));
-      new_manifest = JSON.parse(fs.readFileSync(manifest_src)).manifest;
-    });
-
-    after(function(){
-      fs.unlink(manifest_src);
-    });
-
-    it('transforms full file names', function(){
-      expect(new_manifest[0].full).toBe('localhost:3000/data/foo.jpg');
+      it('alters the thumb image', function(){
+        expect(new_manifest[0].thumb).toBe('localhost:3000/data/small/bar.jpg');
+        expect(new_manifest[1].thumb).toBe('localhost:3000/data/small/thumbs/apple.thumb.jpg');
+      });
     });
   });
 
