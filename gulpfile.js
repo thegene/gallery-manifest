@@ -8,6 +8,8 @@ var through = require('through2');
 var env,
   gallery;
 
+gulp.task('default', ['build']);
+
 gulp.task('build', ['environment', 'clean'], function(){
   builder = new ManifestBuilder(config());
   gulp.src(path.join(__dirname, 'wedding', 'manifest.json'))
