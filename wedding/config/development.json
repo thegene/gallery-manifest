@@ -1,4 +1,4 @@
 {
-  "fullBase": "localhost:3000",
-  "thumbBase": "localhost:3000"
+  "fullBase": "localhost:3000/full",
+  "thumbBase": "localhost:3000/thumbs"
 }
