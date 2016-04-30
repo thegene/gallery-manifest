@@ -12,7 +12,7 @@ gulp.task('default', ['build']);
 
 gulp.task('build', ['environment', 'clean'], function(){
   builder = new ManifestBuilder(config());
-  gulp.src(path.join(__dirname, 'wedding', 'manifest.json'))
+  gulp.src(path.join(__dirname, gallery, 'manifest.json'))
     .pipe(through.obj(function(data, encoding, done){
       original = JSON.parse(data.contents.toString());
       new_manifest = builder.transform(original);
@@ -38,6 +38,7 @@ gulp.task('environment', function(){
     // naive avoidance of messing with changing directories
     env = env.replace('.', '');
     gallery = gallery.replace('.', '');
+    console.log('Building gallery ' + gallery);
   }
 });
 
