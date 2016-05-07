@@ -4,7 +4,7 @@ Builds config manifests for the Gallery app here: https://github.com/thegene/gal
 ## BUILD
 each manifest exists as a directory in the root directory of the app. Each manfiest has a `manifest.json` file and a config directory directory, which when used together can build environment specific `manifest.json` files within the root `config` directory.
 
-Run the `gulp build` command, specifying a `GALLERY` and optionally the `NODE_ENV` (assumes `development`)
+Run the `gulp build` command, specifying a `GALLERY` and optionally the `GALLERY_ENV` (assumes `development`), or `CONFIG_DIR` (assumes `config`)
 ```
   GALLERY=wedding NODE_ENV=development gulp build
 ```

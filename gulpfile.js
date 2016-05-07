@@ -5,9 +5,6 @@ var clean = require('gulp-clean');
 var ManifestBuilder = require('./manifest_builder.js');
 var through = require('through2');
 
-var env,
-  gallery;
-
 gulp.task('default', ['build']);
 
 gulp.task('build', ['environment', 'clean'], function(){
@@ -20,7 +17,7 @@ gulp.task('build', ['environment', 'clean'], function(){
       this.push(data);
       done();
     }))
-   .pipe(gulp.dest('config/'))
+   .pipe(gulp.dest(config_dir))
 });
 
 gulp.task('clean', function(){
@@ -28,10 +25,15 @@ gulp.task('clean', function(){
     .pipe(clean());
 });
 
+var env,
+  gallery,
+  config_dir;
+
 gulp.task('environment', function(){
-  env = process.env.node_env || 'development';
+  env = process.env.GALLERY_ENV || 'development';
   gallery = process.env.GALLERY;
-  
+  config_dir = process.env.CONFIG_DIR || 'config';
+
   if (!gallery) {
     throw 'Must specify a GALLERY';
   } else {
