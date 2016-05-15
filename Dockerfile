@@ -15,6 +15,7 @@ RUN chown -R manifest:manifest /src
 # mountable config directory
 RUN mkdir /config
 RUN chown -R manifest:manifest /config
+VOLUME /config
 
 USER manifest
 WORKDIR /src
