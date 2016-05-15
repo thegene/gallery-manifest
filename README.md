@@ -10,3 +10,17 @@ Run the `gulp build` command, specifying a `GALLERY` and optionally the `GALLERY
 ```
 
 This will look at the `wedding/config/development.json` file to get the `thumbBase` and `fullBase` config options, and prepends to the `thumb` and `full` settings in the `wedding/manifest.json` file.
+
+## WITH DOCKER
+Run using the docker repo thegene/gallery-manifests, specify the following at runtime
+- `GALLERY` environment variable
+- `/config` mount point
+- (optional) `GALLERY_ENV` environment variable
+
+```
+Docker run -d \
+-v /PATH/TO/CONFIGDIR:/config \
+-e GALLERY=harrison_newborn \
+-e GALLERY_ENV=production \
+thegene/gallery-manifests
+```
