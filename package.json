@@ -10,8 +10,10 @@
   "author": "Eugene Westbrook",
   "license": "ISC",
   "dependencies": {
+    "glob": "^7.0.3",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
+    "gulp-rename": "^1.2.2",
     "through2": "^2.0.1"
   },
   "devDependencies": {
