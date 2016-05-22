@@ -28,7 +28,9 @@ gulp.task('clean', function(){
 var config_dir;
 
 gulp.task('environment', function(){
-  return config_dir = process.env.CONFIG_DIR || 'config';
+  config_dir = process.env.CONFIG_DIR || 'config';
+  console.log('Using ' + config_dir + ' config dir');
+  return;
 });
 
 var build = function(gallery){
@@ -52,6 +54,8 @@ var build = function(gallery){
    });
 }
 
+
+
 var withEachEnv = function(config, callback){
   for (env in config) {
     if (config.hasOwnProperty(env)){
@@ -64,6 +68,3 @@ var galleryPath = function(gallery) {
   return path.join(__dirname, 'galleries', gallery);
 }
 
-var galleryDestPath = function(gallery, env){
-  return path.join(__dirname, config_dir, gallery, env + '.json');
-}

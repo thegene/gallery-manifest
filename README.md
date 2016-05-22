@@ -2,25 +2,31 @@
 Builds config manifests for the Gallery app here: https://github.com/thegene/gallery
 
 ## BUILD
-each manifest exists as a directory in the root directory of the app. Each manfiest has a `manifest.json` file and a config directory directory, which when used together can build environment specific `manifest.json` files within the root `config` directory.
-
-Run the `gulp build` command, specifying a `GALLERY` and optionally the `GALLERY_ENV` (assumes `development`), or `CONFIG_DIR` (assumes `config`)
+each manifest exists as a directory in the root directory of the app. Each manfiest has a `manifest.json` file and a config.json file, which when used together can build environment specific manifest files within the root `config` directory. The config.json file should look something like this:
 ```
-  GALLERY=wedding NODE_ENV=development gulp build
+{
+  "development": {
+    "thumbBase": "/path/to/thumbs",
+    "fullBase": "/path/to/images" 
+  },
+  "production": {
+    "thumbBase": "mediaserver:3000",
+    "fullBase": "mediaserver:3000/full/images"
+  }
+}
 ```
+With the above config file, the resulting gallery would have two manifest files: `development.json` and `production.json` each with the `manifest.json` image files being prepended by their corresponding base configs.
 
-This will look at the `wedding/config/development.json` file to get the `thumbBase` and `fullBase` config options, and prepends to the `thumb` and `full` settings in the `wedding/manifest.json` file.
+### Usage
+```
+gulp build
+```
 
 ## WITH DOCKER
-Run using the docker repo thegene/gallery-manifests, specify the following at runtime
-- `GALLERY` environment variable
-- `/config` mount point
-- (optional) `GALLERY_ENV` environment variable
+Run using the docker repo thegene/gallery-manifests. The resulting `config` directory described above will be built at `/config`
 
 ```
 Docker run -d \
 -v /PATH/TO/CONFIGDIR:/config \
--e GALLERY=harrison_newborn \
--e GALLERY_ENV=production \
 thegene/gallery-manifests
 ```
