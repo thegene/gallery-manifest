@@ -23,10 +23,10 @@ gulp build
 ```
 
 ## WITH DOCKER
-Run using the docker repo thegene/gallery-manifests. The resulting `config` directory described above will be built at `/config`
+Run using the docker repo thegene/gallery-manifests. The resulting `/config` directory will be available to other containers via the `--volumes-from` directive.
 
 ```
 Docker run -d \
--v /PATH/TO/CONFIGDIR:/config \
+-v /config \
 thegene/gallery-manifests
 ```
