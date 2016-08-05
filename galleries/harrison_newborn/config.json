@@ -2,5 +2,9 @@
   "development": {
     "fullBase": "http://localhost:3000/full",
     "thumbBase": "http://localhost:3000/thumbs"
+  },
+  "production": {
+    "fullBase": "http:s3.amazonaws.com/harrison-birth-photos",
+    "fullBase": "http:s3.amazonaws.com/harrison-birth-photos/thumbs"
   }
 }
