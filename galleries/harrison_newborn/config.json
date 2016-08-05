@@ -5,6 +5,6 @@
   },
   "production": {
     "fullBase": "http:s3.amazonaws.com/harrison-birth-photos",
-    "fullBase": "http:s3.amazonaws.com/harrison-birth-photos/thumbs"
+    "thumbBase": "http:s3.amazonaws.com/harrison-birth-photos/thumbs"
   }
 }

@@ -5,6 +5,6 @@
   },
   "production": {
     "fullBase": "http:s3.amazonaws.com/thegene-wedding/full",
-    "fullBase": "http:s3.amazonaws.com/thegene-wedding/thumbs"
+    "thumbBase": "http:s3.amazonaws.com/thegene-wedding/thumbs"
   }
 }

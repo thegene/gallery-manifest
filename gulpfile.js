@@ -40,7 +40,7 @@ var build = function(gallery){
   var manifestPath = path.join(galleryPath(gallery), 'manifest.json');
 
   withEachEnv(config, function(env, envConf) {
-    builder = new ManifestBuilder(envConf);
+    var builder = new ManifestBuilder(envConf);
     gulp.src(manifestPath)
       .pipe(through.obj(function(data, encoding, done){
         original = JSON.parse(data.contents.toString());
