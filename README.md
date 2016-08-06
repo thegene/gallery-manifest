@@ -26,7 +26,5 @@ gulp build
 Run using the docker repo thegene/gallery-manifests. The resulting `/config` directory will be available to other containers via the `--volumes-from` directive.
 
 ```
-Docker run -d \
--v /config \
-thegene/gallery-manifests
+Docker run hegene/gallery-manifests
 ```
