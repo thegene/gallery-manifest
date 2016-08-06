@@ -4,7 +4,7 @@
     "thumbBase": "http://localhost:3000/thumbs"
   },
   "production": {
-    "fullBase": "http:s3.amazonaws.com/thegene-wedding/full",
-    "thumbBase": "http:s3.amazonaws.com/thegene-wedding/thumbs"
+    "fullBase": "http://s3.amazonaws.com/thegene-wedding/full",
+    "thumbBase": "http://s3.amazonaws.com/thegene-wedding/thumbs"
   }
 }
