@@ -11,6 +11,7 @@ RUN cd /manifest && npm install
 # mountable config directory
 RUN mkdir /config
 RUN chown -R manifest:manifest /config
+VOLUME /config
 
 # bring the app over to /manifest
 COPY galleries /manifest/galleries
@@ -19,8 +20,7 @@ COPY manifest_builder.js /manifest
 RUN chown -R manifest:manifest /manifest
 
 USER manifest
-
 ENV CONFIG_DIR=/config
-RUN cd /manifest && node_modules/gulp/bin/gulp.js build
 
-CMD ["/bin/bash"]
+WORKDIR /manifest
+CMD ["node_modules/gulp/bin/gulp.js", "build"]
